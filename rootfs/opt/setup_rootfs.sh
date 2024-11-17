@@ -4,6 +4,8 @@
 #this is meant to be run within the chroot created by debootstrap
 
 
+export PATH=/usr/sbin:/sbin:$PATH
+
 DEBUG="$1"
 set -e
 if [ "$DEBUG" ]; then
@@ -21,19 +23,19 @@ enable_root="$8"
 disable_base_pkgs="$9"
 arch="${10}"
 
-custom_repo="https://shimboot.ading.dev/debian"
-custom_repo_domain="shimboot.ading.dev"
-sources_entry="deb [trusted=yes arch=$arch] ${custom_repo} ${release_name} main"
+#custom_repo="https://shimboot.ading.dev/debian"
+#custom_repo_domain="shimboot.ading.dev"
+#sources_entry="deb [trusted=yes arch=$arch] ${custom_repo} ${release_name} main"
 
 export DEBIAN_FRONTEND="noninteractive"
 
 #add shimboot repos
-echo -e "${sources_entry}\n$(cat /etc/apt/sources.list)" > /etc/apt/sources.list
-tee -a /etc/apt/preferences << END
-Package: *
-Pin: origin ${custom_repo_domain}
-Pin-Priority: 1001
-END
+#echo -e "${sources_entry}\n$(cat /etc/apt/sources.list)" > /etc/apt/sources.list
+#tee -a /etc/apt/preferences << END
+#Package: *
+#Pin: origin ${custom_repo_domain}
+#Pin-Priority: 1001
+#END
 
 #enable i386 arch so that steam works 
 if [ "$arch" = "amd64" ]; then
@@ -44,6 +46,8 @@ fi
 #install certs to prevent apt ssl errors
 apt-get install -y ca-certificates
 apt-get update
+
+apt-get install -y 
 
 #fix apt repos for ubuntu
 if grep "ubuntu.com" /etc/apt/sources.list > /dev/null; then
@@ -140,6 +144,11 @@ fi
 
 echo "Enter a user password:"
 set_password "$username" "$user_passwd"
+
+#fix sbin paths not being in PATH
+cat >> /etc/profile << EOF
+  PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+EOF
 
 #clean apt caches
 apt-get clean

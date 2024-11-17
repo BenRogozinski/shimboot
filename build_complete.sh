@@ -202,8 +202,8 @@ if [ ! "$rootfs_dir" ]; then
   ./build_rootfs.sh $rootfs_dir $release \
     custom_packages=$desktop_package \
     hostname=shimboot-$board \
-    username=user \
-    user_passwd=user \
+    username=admin \
+    user_passwd=password \
     arch=$arch \
     distro=$distro
 fi
