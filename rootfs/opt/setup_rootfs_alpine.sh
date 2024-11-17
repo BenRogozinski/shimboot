@@ -20,10 +20,14 @@ disable_base_pkgs="$9"
 arch="${10}"
 
 #set hostname and apk repos
-setup-hostname "$hostname"
-setup-apkrepos \
-  "http://dl-cdn.alpinelinux.org/alpine/$release_name/main/" \
-  "http://dl-cdn.alpinelinux.org/alpine/$release_name/community/"
+#/sbin/setup-hostname "$hostname"
+#setup-apkrepos \
+#  "http://dl-cdn.alpinelinux.org/alpine/$release_name/main/" \
+#  "http://dl-cdn.alpinelinux.org/alpine/$release_name/community/"
+
+echo "$hostname" > /etc/hostname
+echo -e "http://dl-cdn.alpinelinux.org/alpine/$release_name/main/\nhttp://dl-cdn.alpinelinux.org/alpine/$release_name/community/" > /etc/apk/repositories
+
 
 #enable services on startup
 rc-update add acpid default
