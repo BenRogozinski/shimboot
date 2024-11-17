@@ -128,7 +128,7 @@ print_selector() {
 
   echo "┌──────────────────────┐"
   echo "│ Shimboot OS Selector │"
-  echo "| That costs extra ... │"
+  echo "| That costs extra ... |"
   echo "└──────────────────────┘"
 
   if [ "${rootfs_partitions}" ]; then
@@ -145,7 +145,6 @@ print_selector() {
 
   echo "q) reboot"
   echo "s) enter a shell"
-  echo "r) rescue mode"
   echo "l) view license"
 }
 
@@ -170,7 +169,7 @@ get_selection() {
   fi
 
   local selection_cmd="$(echo "$selection" | cut -d' ' -f1)"
-  if [ "$selection_cmd" = "r" ]; then
+  if [ "$selection_cmd" = "rescue" ]; then
     selection="$(echo "$selection" | cut -d' ' -f2-)"
     rescue_mode="1"
   else

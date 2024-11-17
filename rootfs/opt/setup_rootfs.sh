@@ -23,19 +23,19 @@ enable_root="$8"
 disable_base_pkgs="$9"
 arch="${10}"
 
-#custom_repo="https://shimboot.ading.dev/debian"
-#custom_repo_domain="shimboot.ading.dev"
-#sources_entry="deb [trusted=yes arch=$arch] ${custom_repo} ${release_name} main"
+custom_repo="https://shimboot.ading.dev/debian"
+custom_repo_domain="shimboot.ading.dev"
+sources_entry="deb [trusted=yes arch=$arch] ${custom_repo} ${release_name} main"
 
 export DEBIAN_FRONTEND="noninteractive"
 
 #add shimboot repos
-#echo -e "${sources_entry}\n$(cat /etc/apt/sources.list)" > /etc/apt/sources.list
-#tee -a /etc/apt/preferences << END
-#Package: *
-#Pin: origin ${custom_repo_domain}
-#Pin-Priority: 1001
-#END
+echo -e "${sources_entry}\n$(cat /etc/apt/sources.list)" > /etc/apt/sources.list
+tee -a /etc/apt/preferences << END
+Package: *
+Pin: origin ${custom_repo_domain}
+Pin-Priority: 1001
+END
 
 #enable i386 arch so that steam works 
 if [ "$arch" = "amd64" ]; then
