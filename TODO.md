@@ -14,7 +14,8 @@ A modified version of [ading2210/shimboot](https://github.com/ading2210/shimboot
 - [ ] Add support for more board models
 - [ ] Change APT repository URL
 - [ ] Add support for user namespaces (Steam)
-
+- [ ] Fix ChromeOS boot options
+- [ ] Add script to automatically resize FS on first boot
 
 ### Done
 - [x] Add support for ubuntu-desktop
