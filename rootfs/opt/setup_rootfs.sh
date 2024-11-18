@@ -147,7 +147,8 @@ set_password "$username" "$user_passwd"
 
 #fix sbin paths not being in PATH
 cat >> /etc/profile << EOF
-  PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+export PATH
 EOF
 
 #clean apt caches
