@@ -10,7 +10,7 @@ print_help() {
   echo "  rootfs_dir   - Use a different rootfs for the build. The directory you select will be copied before any patches are applied."
   echo "  quiet        - Don't use progress indicators which may clog up log files."
   echo "  desktop      - The desktop environment to install. This defaults to 'xfce'. Valid options include:"
-  echo "                   gnome, xfce, kde, lxde, gnome-flashback, cinnamon, mate, lxqt"
+  echo "                   gnome, xfce, kde, lxde, gnome-flashback, cinnamon, mate, lxqt, ubuntu-desktop"
   echo "  data_dir     - The working directory for the scripts. This defaults to ./data"
   echo "  arch         - The CPU architecture to build the shimboot image for. Set this to 'arm64' if you have an ARM Chromebook."
   echo "  release      - Set this to either 'bookworm' or 'unstable' to build for Debian stable/unstable."
@@ -168,7 +168,11 @@ download_and_unzip $shim_url $shim_zip $shim_bin
 
 print_title "building $distro rootfs"
 if [ ! "$rootfs_dir" ]; then
-  desktop_package="task-$desktop-desktop"
+  if [ "$desktop" = "ubuntu-desktop" ]; then
+    desktop_package="ubuntu-desktop"
+  else
+    desktop_package="task-$desktop-desktop"
+  fi
   rootfs_dir="$(realpath -m data/rootfs_$board)"
   if [ "$(findmnt -T "$rootfs_dir/dev")" ]; then
     sudo umount -l $rootfs_dir/* 2>/dev/null || true
